@@ -1778,7 +1778,7 @@ void vsid::VSIDPlugin::loadEse()
 void vsid::VSIDPlugin::addOrSetSquawk(const std::string& callsign, bool forceTS)
 {
 	messageHandler->writeMessage("INFO", "addOrSetSquawk got called, calculating timeDiff");
-	//long long timeDiff = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::utc_clock::now() - lastSquawkTP).count();
+	long long timeDiff = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::utc_clock::now() - lastSquawkTP).count();
 	messageHandler->writeMessage("INFO", "TimeDiff: skipped ");
 	if (3 >= 2)
 	{
@@ -1787,7 +1787,14 @@ void vsid::VSIDPlugin::addOrSetSquawk(const std::string& callsign, bool forceTS)
 			messageHandler->writeMessage("DEBUG", "[" + callsign + "] calling TS Squawk func", vsid::MessageHandler::DebugArea::Dev);
 			this->callExtFunc(callsign.c_str(), "TopSky plugin", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "TopSky plugin", 667, POINT(), RECT());
 
-			//this->lastSquawkTP = std::chrono::utc_clock::now();
+			try {
+				lastSquawkTP = std::chrono::utc_clock::now();
+			}
+			catch (const std::exception& e) {
+				messageHandler->writeMessage("ERROR", "utc_clock::now() failed: " + std::string(e.what()));
+				messageHandler->writeMessage("ERROR", "utc_clock::now() failed: " + std::string(typeid(e).name()));
+				// Fallback: setze auf steady_clock::now(), dann müsste lastSquawkTP vom passenden Typ sein
+			}
 		}
 		else if (this->ccamsLoaded)
 		{
