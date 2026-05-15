@@ -1924,6 +1924,8 @@ void vsid::VSIDPlugin::OnFunctionCall(int FunctionId, const char * sItemString, 
 	EuroScopePlugIn::CFlightPlan fpln = FlightPlanSelectASEL();
 	std::string callsign = fpln.GetCallsign();
 
+	messageHandler->writeMessage("INFO", "OnFunctionCall called. id: " + std::to_string(FunctionId) + " Callsign: " + callsign);
+
 	if (!fpln.IsValid())
 	{
 		messageHandler->writeMessage("ERROR", "Couldn't process flight plan as it was reported invalid (technical invalid). Code: " +
@@ -2626,7 +2628,7 @@ void vsid::VSIDPlugin::OnFunctionCall(int FunctionId, const char * sItemString, 
 		if (FunctionId == TAG_FUNC_VSID_TSSQUAWK)
 		{
 			if (this->topskyLoaded) {
-				messageHandler->writeMessage("DEBUG", "this->addOrSetSquawk(" + callsign + ", true);");
+				messageHandler->writeMessage("ERROR", "this->addOrSetSquawk(" + callsign + ", true);");
 				this->addOrSetSquawk(callsign, true);
 			}
 			else {

@@ -90,8 +90,8 @@ void vsid::EseParser::line(Section s, std::string_view l)
 						messageHandler->writeMessage("WARNING", "Empty coordinate string found for ATC station \"" + atcVec.at(0) +
 							"\" vis point (lat: \"" + visLat + "\" / lon: \"" + visLon + "\"! Skipping coordinate.");
 
-						messageHandler->writeMessage("DEBUG", "[ESE] empty vispoint lat (\"" + visLat + "\" / lon (\"" + visLon +
-							"\" in line : " + std::string(l), vsid::MessageHandler::DebugArea::Conf);
+						// messageHandler->writeMessage("DEBUG", "[ESE] empty vispoint lat (\"" + visLat + "\" / lon (\"" + visLon +
+						// 	"\" in line : " + std::string(l), vsid::MessageHandler::DebugArea::Conf);
 
 						++idx;
 						continue;
@@ -160,7 +160,7 @@ void vsid::EseParser::line(Section s, std::string_view l)
 
 			auto [sid, trans] = vsid::fplnhelper::splitTransition(currSid);
 
-			messageHandler->writeMessage("DEBUG", "[ESE] Parsing SID \"" + currSid + "\" - sid: " + sid + " / trans : " + trans, vsid::MessageHandler::DebugArea::Dev);
+			//messageHandler->writeMessage("DEBUG", "[ESE] Parsing SID \"" + currSid + "\" - sid: " + sid + " / trans : " + trans, vsid::MessageHandler::DebugArea::Dev);
 
 			//const bool lastIsDigit = vsid::utils::lastIsDigit(sid);
 
@@ -213,11 +213,11 @@ void vsid::EseParser::line(Section s, std::string_view l)
 
 			sectionSid.trans = std::move(sectionTrans);
 
-			messageHandler->writeMessage("DEBUG", "[ESE] Stored value: [" + sectionSid.base + sectionSid.number +
-				((sectionSid.desig) ? std::string(1, *sectionSid.desig) : "") +
-				"] and trans: [" + sectionSid.trans.base + ((sectionSid.trans.number) ? std::string(1, *sectionSid.trans.number) : "") +
-				((sectionSid.trans.desig) ? std::string(1, *sectionSid.trans.desig) : "") + "]",
-				vsid::MessageHandler::DebugArea::Dev);
+			// messageHandler->writeMessage("DEBUG", "[ESE] Stored value: [" + sectionSid.base + sectionSid.number +
+			// 	((sectionSid.desig) ? std::string(1, *sectionSid.desig) : "") +
+			// 	"] and trans: [" + sectionSid.trans.base + ((sectionSid.trans.number) ? std::string(1, *sectionSid.trans.number) : "") +
+			// 	((sectionSid.trans.desig) ? std::string(1, *sectionSid.trans.desig) : "") + "]",
+			// 	vsid::MessageHandler::DebugArea::Dev);
 
 			this->sectionSids_.emplace(std::move(sectionSid));
 		}

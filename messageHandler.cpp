@@ -12,9 +12,6 @@ vsid::MessageHandler::~MessageHandler() { this->closeConsole(); }
 
 void vsid::MessageHandler::writeMessage(std::string sender, std::string msg, DebugArea debugArea)
 {
-	// Tallerik
-	//if (sender == "DEBUG" && this->getLevel() != Level::Debug) return;
-
 	try
 	{
 		if (this->currentLevel == Level::Debug && (this->debugArea == debugArea || this->debugArea == DebugArea::All) && sender == "DEBUG")
