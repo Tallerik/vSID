@@ -1784,16 +1784,14 @@ void vsid::VSIDPlugin::addOrSetSquawk(const std::string& callsign, bool forceTS)
 		if (this->topskyLoaded && (forceTS || this->getConfigParser().preferTopsky))
 		{
 			messageHandler->writeMessage("DEBUG", "[" + callsign + "] calling TS Squawk func", vsid::MessageHandler::DebugArea::Dev);
-			// Tallerik
-			//this->callExtFunc(callsign.c_str(), "TopSky plugin", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "TopSky plugin", 667, POINT(), RECT());
+			this->callExtFunc(callsign.c_str(), "TopSky plugin", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "TopSky plugin", 667, POINT(), RECT());
 
 			this->lastSquawkTP = std::chrono::utc_clock::now();
 		}
 		else if (this->ccamsLoaded)
 		{
 			messageHandler->writeMessage("DEBUG", "[" + callsign + "] calling CCAMS Squawk func", vsid::MessageHandler::DebugArea::Dev);
-			// Tallerik
-			// this->callExtFunc(callsign.c_str(), "CCAMS", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "CCAMS", 871, POINT(), RECT());
+			this->callExtFunc(callsign.c_str(), "CCAMS", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "CCAMS", 871, POINT(), RECT());
 
 			this->lastSquawkTP = std::chrono::utc_clock::now();
 		}
@@ -2523,8 +2521,8 @@ void vsid::VSIDPlugin::OnFunctionCall(int FunctionId, const char * sItemString, 
 			if (!this->activeAirports.contains(adep)) return;
 
 			auto [atcSid, atcRwy] = vsid::fplnhelper::getAtcBlock(fpln);
-			// Tallerik
-			//this->callExtFunc(callsign.c_str(), nullptr, EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN,
+
+			this->callExtFunc(callsign.c_str(), nullptr, EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN,
 				callsign.c_str(), nullptr, EuroScopePlugIn::TAG_ITEM_FUNCTION_SET_CLEARED_FLAG, POINT(), RECT());
 
 			if (this->processed.contains(callsign) && std::string(fpln.GetFlightPlanData().GetPlanType()) != "V" && // #checkforremoval - .contains check now above FunctionId block
@@ -2540,8 +2538,7 @@ void vsid::VSIDPlugin::OnFunctionCall(int FunctionId, const char * sItemString, 
 
 			if (!fpln.GetClearenceFlag())
 			{
-				// Tallerik
-				//this->callExtFunc(callsign.c_str(), nullptr, EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN,
+				this->callExtFunc(callsign.c_str(), nullptr, EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN,
 					callsign.c_str(), nullptr, EuroScopePlugIn::TAG_ITEM_FUNCTION_SET_CLEARED_FLAG, POINT(), RECT());
 			}
 
@@ -5606,16 +5603,14 @@ void vsid::VSIDPlugin::OnTimer(int Counter)
 			if (this->topskyLoaded && this->getConfigParser().preferTopsky)
 			{
 				messageHandler->writeMessage("DEBUG", "[" + callsign + "] calling TS Squawk func", vsid::MessageHandler::DebugArea::Dev);
-				// Tallerik
-				//this->callExtFunc(callsign.c_str(), "TopSky plugin", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "TopSky plugin", 667, POINT(), RECT());
+				this->callExtFunc(callsign.c_str(), "TopSky plugin", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "TopSky plugin", 667, POINT(), RECT());
 
 				this->lastSquawkTP = std::chrono::utc_clock::now();
 			}
 			else if (this->ccamsLoaded)
 			{
 				messageHandler->writeMessage("DEBUG", "[" + callsign + "] calling CCAMS Squawk func", vsid::MessageHandler::DebugArea::Dev);
-				// Tallerik
-				//this->callExtFunc(callsign.c_str(), "CCAMS", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "CCAMS", 871, POINT(), RECT());
+				this->callExtFunc(callsign.c_str(), "CCAMS", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "CCAMS", 871, POINT(), RECT());
 
 				this->lastSquawkTP = std::chrono::utc_clock::now();
 			}
