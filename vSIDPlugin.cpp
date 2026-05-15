@@ -1787,7 +1787,7 @@ void vsid::VSIDPlugin::addOrSetSquawk(const std::string& callsign, bool forceTS)
 			messageHandler->writeMessage("DEBUG", "[" + callsign + "] calling TS Squawk func", vsid::MessageHandler::DebugArea::Dev);
 			this->callExtFunc(callsign.c_str(), "TopSky plugin", EuroScopePlugIn::TAG_ITEM_TYPE_CALLSIGN, callsign.c_str(), "TopSky plugin", 667, POINT(), RECT());
 
-			this->lastSquawkTP = std::chrono::utc_clock::now();
+			//this->lastSquawkTP = std::chrono::utc_clock::now();
 		}
 		else if (this->ccamsLoaded)
 		{
