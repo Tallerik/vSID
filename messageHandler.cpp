@@ -110,7 +110,7 @@ void vsid::MessageHandler::closeConsole()
 {
 	if (this->consoleFile != NULL)
 	{
-		trywriteMessage
+		try
 		{
 			fclose(this->consoleFile);
 			FreeConsole();
