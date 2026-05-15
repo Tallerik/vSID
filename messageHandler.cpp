@@ -12,6 +12,7 @@ vsid::MessageHandler::~MessageHandler() { this->closeConsole(); }
 
 void vsid::MessageHandler::writeMessage(std::string sender, std::string msg, DebugArea debugArea)
 {
+	if (debugArea == DebugArea::Conf) return;
 	try
 	{
 		if (this->currentLevel == Level::Debug && (this->debugArea == debugArea || this->debugArea == DebugArea::All) && sender == "DEBUG")
