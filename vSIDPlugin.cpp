@@ -1777,6 +1777,7 @@ void vsid::VSIDPlugin::loadEse()
 
 void vsid::VSIDPlugin::addOrSetSquawk(const std::string& callsign, bool forceTS)
 {
+	messageHandler->writeMessage("INFO", "addOrSetSquawk got called, calculating timeDiff");
 	long long timeDiff = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::utc_clock::now() - lastSquawkTP).count();
 	messageHandler->writeMessage("INFO", "TimeDiff: " + std::to_string(timeDiff));
 	if (timeDiff >= 2)
