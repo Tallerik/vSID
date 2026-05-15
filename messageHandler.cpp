@@ -12,7 +12,8 @@ vsid::MessageHandler::~MessageHandler() { this->closeConsole(); }
 
 void vsid::MessageHandler::writeMessage(std::string sender, std::string msg, DebugArea debugArea)
 {
-	if (sender == "DEBUG" && this->getLevel() != Level::Debug) return;
+	// Tallerik
+	//if (sender == "DEBUG" && this->getLevel() != Level::Debug) return;
 
 	try
 	{
@@ -31,11 +32,13 @@ void vsid::MessageHandler::writeMessage(std::string sender, std::string msg, Deb
 
 			std::cout << "[" << vsid::time::toTimeString(vsid::time::getUtcNow()) << "] [" << area << "] " << msg << '\n';
 		}
-		else if (/*this->currentLevel != Level::Debug && */sender != "DEBUG") this->msg.push_back(std::pair<std::string, std::string>(sender, msg));
+		//Tallerik
+		//else if (/*this->currentLevel != Level::Debug && */sender != "DEBUG")
+		this->msg.push_back(std::pair<std::string, std::string>(sender, msg));
 	}
 	catch (std::exception& e)
 	{
-		this->msg.push_back(std::pair<std::string, std::string>("ERROR", e.what()));
+		this->msg.push_back(std::pair<std::string, std::string>("ERROR CATCH", e.what()));
 	}
 	
 }
@@ -107,7 +110,7 @@ void vsid::MessageHandler::closeConsole()
 {
 	if (this->consoleFile != NULL)
 	{
-		try
+		trywriteMessage
 		{
 			fclose(this->consoleFile);
 			FreeConsole();

@@ -1778,7 +1778,7 @@ void vsid::VSIDPlugin::loadEse()
 void vsid::VSIDPlugin::addOrSetSquawk(const std::string& callsign, bool forceTS)
 {
 	long long timeDiff = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::utc_clock::now() - lastSquawkTP).count();
-
+	messageHandler->writeMessage("INFO", "TimeDiff: " + std::to_string(timeDiff));
 	if (timeDiff >= 2)
 	{
 		if (this->topskyLoaded && (forceTS || this->getConfigParser().preferTopsky))
@@ -1795,6 +1795,10 @@ void vsid::VSIDPlugin::addOrSetSquawk(const std::string& callsign, bool forceTS)
 
 			this->lastSquawkTP = std::chrono::utc_clock::now();
 		}
+		else
+		{
+			messageHandler->writeMessage("ERROR", "No TopSky and no CCAMS!");
+		}
 	}
 	else
 	{
@@ -1809,6 +1813,10 @@ void vsid::VSIDPlugin::addOrSetSquawk(const std::string& callsign, bool forceTS)
 		{
 			messageHandler->writeMessage("DEBUG", "[" + callsign + "] in squawk list. Moving to front", vsid::MessageHandler::DebugArea::Dev);
 			this->squawkQueue.splice(this->squawkQueue.begin(), this->squawkQueue, it);
+		}
+		else
+		{
+			messageHandler->writeMessage("ERROR", "EdgeCase vSIDPlugin.cpp: addOrSetSquawk");
 		}
 	}
 }
@@ -2617,8 +2625,13 @@ void vsid::VSIDPlugin::OnFunctionCall(int FunctionId, const char * sItemString, 
 
 		if (FunctionId == TAG_FUNC_VSID_TSSQUAWK)
 		{
-			if (this->topskyLoaded) messageHandler->writeMessage("DEBUG", "this->addOrSetSquawk(" + callsign + ", true);"); //this->addOrSetSquawk(callsign, true);
-			else messageHandler->writeMessage("ERROR", "TopSky auto-assign squawk called, but TopSky was not detected.");
+			if (this->topskyLoaded) {
+				messageHandler->writeMessage("DEBUG", "this->addOrSetSquawk(" + callsign + ", true);");
+				this->addOrSetSquawk(callsign, true);
+			}
+			else {
+				messageHandler->writeMessage("ERROR", "TopSky auto-assign squawk called, but TopSky was not detected.");
+			}
 		}
 	}
 
