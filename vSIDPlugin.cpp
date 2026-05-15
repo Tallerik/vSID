@@ -4810,7 +4810,7 @@ void vsid::VSIDPlugin::OnFlightPlanDisconnect(EuroScopePlugIn::CFlightPlan Fligh
 
 		this->removeFromRequests(callsign, icao);
 
-		this->removeProcessed[callsign] = { std::chrono::steady_clock::now() + std::chrono::minutes{1}, true };
+		this->removeProcessed[callsign] = { std::chrono::system_clock::now() + std::chrono::minutes{1}, true };
 
 		messageHandler->removeCallsignFromErrors(callsign);
 	}
@@ -5635,7 +5635,7 @@ void vsid::VSIDPlugin::OnTimer(int Counter)
 				if (!this->removeProcessed.contains(it->first))
 				{
 					messageHandler->writeMessage("DEBUG", "[" + it->first + "] is invalid. Removal in 1 min.", vsid::MessageHandler::DebugArea::Dev);
-					auto now = std::chrono::steady_clock::now() + std::chrono::minutes{ 1 };
+					auto now = std::chrono::system_clock::now() + std::chrono::minutes{ 1 };
 					this->removeProcessed[it->first] = { now, true }; // assume fpln is disconnected for some reason, might come back
 				}			
 				++it;
@@ -5684,7 +5684,7 @@ void vsid::VSIDPlugin::OnTimer(int Counter)
 
 	if (this->removeProcessed.size() > 0 && Counter % 20 == 0)
 	{
-		auto now = std::chrono::steady_clock::now();
+		auto now = std::chrono::system_clock::now();
 
 		for (auto it = this->removeProcessed.begin(); it != this->removeProcessed.end();)
 		{

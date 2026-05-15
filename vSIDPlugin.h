@@ -397,7 +397,7 @@ namespace vsid
 		 * @param std::map<std::string,> callsign
 		 * @param std::pair<,bool> fpln is disconnected
 		 */
-		std::map<std::string, std::pair< std::chrono::steady_clock::time_point, bool>> removeProcessed;
+		std::map<std::string, std::pair< std::chrono::system_clock::time_point, bool>> removeProcessed;
 		vsid::ConfigParser configParser;
 		std::string configPath;
 		std::map<std::string, std::map<std::string, bool>> savedSettings;
