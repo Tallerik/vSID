@@ -2617,7 +2617,7 @@ void vsid::VSIDPlugin::OnFunctionCall(int FunctionId, const char * sItemString, 
 
 		if (FunctionId == TAG_FUNC_VSID_TSSQUAWK)
 		{
-			if (this->topskyLoaded) this->addOrSetSquawk(callsign, true);
+			if (this->topskyLoaded) messageHandler->writeMessage("DEBUG", "this->addOrSetSquawk(" + callsign + ", true);"); //this->addOrSetSquawk(callsign, true);
 			else messageHandler->writeMessage("ERROR", "TopSky auto-assign squawk called, but TopSky was not detected.");
 		}
 	}
